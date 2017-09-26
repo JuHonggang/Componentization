@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        常用透明度十六进制对照表：
+        10%: 1a     20%: 33     30%: 4d
+        40%: 66     50%: 80     60%: 99
+        70%: b3     80%: cc     90%: e6
+    -->
+
+    <!-- v3.0 UI颜色标准 -->
+    <color name="common_business_b1">#40484d</color>
+    <color name="common_business_b1_90">#e640484d</color>
+    <color name="common_business_b2">#9dabb2</color>
+    <color name="common_business_b2_40">#669dabb2</color>
+    <color name="common_business_b3">#666666</color>
+    <color name="common_business_b4">#cccccc</color>
+    <color name="common_business_b4_50">#80cccccc</color>
+    <color name="common_business_b5">#fafafa</color>
+    <color name="common_business_f6">#f6f6f6</color>
+    <color name="common_business_z1">#33cccc</color>
+    <color name="common_business_z1_40">#6633cccc</color>
+    <color name="common_business_z1_50">#8033cccc</color>
+    <color name="common_business_z2">#40d6bd</color>
+    <color name="common_business_z3">#33c2cc</color>
+    <color name="common_business_x1">#1a000000</color>
+    <color name="common_business_x2">#33000000</color>
+    <color name="common_business_x2_1">#99000000</color>
+    <color name="common_business_x3">#66000000</color>
+    <color name="common_business_x4">#99000000</color>
+    <color name="common_business_t1">#FFBE33</color>
+    <color name="common_business_t2">#ff3300</color>
+
+
+</resources>

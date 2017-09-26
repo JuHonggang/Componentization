@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ZNM UI字体颜色标准 -->
+    <!-- 用于重要的标题,导航栏标题 -->
+    <dimen name="cl_font_size_40">20sp</dimen>
+    <dimen name="cl_font_size_36">18sp</dimen>
+    <dimen name="cl_font_size_34">17sp</dimen>
+    <!-- 用于大多数按钮文字 -->
+    <dimen name="cl_font_size_32">16sp</dimen>
+    <dimen name="cl_font_size_30">15sp</dimen>
+    <!-- 用于大多数文字 -->
+    <dimen name="cl_font_size_28">14sp</dimen>
+    <!-- 用于辅助性文字 -->
+    <dimen name="cl_font_size_26">13sp</dimen>
+    <!-- 用于辅助性文字 -->
+    <dimen name="cl_font_size_24">12sp</dimen>
+    <!-- 用于极少辅助行文字 -->
+    <dimen name="cl_font_size_20">10sp</dimen>
+
+    <dimen name="cl_font_size_44">22sp</dimen>
+    <dimen name="cl_font_size_48">24sp</dimen>
+    <dimen name="cl_font_size_56">28sp</dimen>
+    <dimen name="cl_font_size_64">32sp</dimen>
+    <dimen name="cl_font_size_96">48sp</dimen>
+
+    <!-- 常用间距值 -->
+    <dimen name="cl_spacing_8">8dp</dimen>
+    <dimen name="cl_spacing_10">10dp</dimen>
+    <dimen name="cl_spacing_12">12dp</dimen>
+    <dimen name="cl_spacing_16">16dp</dimen>
+    <dimen name="cl_spacing_18">18dp</dimen>
+    <dimen name="cl_spacing_20">20dp</dimen>
+    <dimen name="cl_spacing_24">24dp</dimen>
+
+</resources>

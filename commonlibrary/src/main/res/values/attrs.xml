@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="cl_CircleImage">
+        <attr name="cl_cl_border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="cl_TagGroup">
+        <!-- Whether the tag group is in append mode. -->
+        <attr name="cl_atg_isAppendMode" format="boolean" />
+        <!-- If the tag group is in append mode, what the hint of input tag. -->
+        <attr name="cl_atg_inputHint" format="string" />
+
+        <!-- The tag view outline border color. -->
+        <attr name="cl_atg_borderColor" format="color" />
+        <!-- The tag view text color. -->
+        <attr name="cl_atg_textColor" format="color" />
+        <!-- The tag view background color. -->
+        <attr name="cl_atg_backgroundColor" format="color" />
+
+        <!-- The dash outline border color, when in append mode. -->
+        <attr name="cl_atg_dashBorderColor" format="color" />
+        <!-- The input tag hint text color, when in append mode. -->
+        <attr name="cl_atg_inputHintColor" format="color" />
+        <!-- The input tag type text color, when in append mode. -->
+        <attr name="cl_atg_inputTextColor" format="color" />
+
+        <!-- The checked tag view outline border color. -->
+        <attr name="cl_atg_checkedBorderColor" format="color" />
+        <!-- The checked text color. -->
+        <attr name="cl_atg_checkedTextColor" format="color" />
+        <!-- The checked marker color. -->
+        <attr name="cl_atg_checkedMarkerColor" format="color" />
+        <!-- The checked tag view background color. -->
+        <attr name="cl_atg_checkedBackgroundColor" format="color" />
+
+        <!-- The tag view background color, when the tag view is being pressed. -->
+        <attr name="cl_atg_pressedBackgroundColor" format="color" />
+
+        <!-- The tag view outline border stroke width. -->
+        <attr name="cl_atg_borderStrokeWidth" format="dimension" />
+        <!-- The tag view text size. -->
+        <attr name="cl_atg_textSize" format="dimension" />
+
+        <attr name="cl_atg_horizontalSpacing" format="dimension" />
+        <attr name="cl_atg_verticalSpacing" format="dimension" />
+        <attr name="cl_atg_horizontalPadding" format="dimension" />
+        <attr name="cl_atg_verticalPadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="cl_AutoViewPager">
+        <attr name="cl_itemCount" format="integer"/>
+        <attr name="cl_indicatorNormalIcon" format="reference"/>
+        <attr name="cl_indicatorSelectedIcon" format="reference"/>
+        <attr name="cl_indicatorIconSize" format="dimension"/>
+        <attr name="cl_indicatorLayoutMargin" format="dimension"/>
+        <attr name="cl_indicatorGap" format="dimension"/>
+        <attr name="cl_autoSwitchTime" format="integer"/>
+        <attr name="cl_isAutoPlay" format="boolean"/>
+        <attr name="cl_defaultPager" format="integer"/>
+        <attr name="cl_userAnimation" format="boolean"/>
+        <attr name="cl_showIndicator" format="boolean"/>
+        <attr name="cl_loopPlay" format="boolean"/>
+        <attr name="cl_scale" format="float"/>
+        <attr name="cl_image_alpha" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="cl_CircleProgressBar">
+        <!-- 进度条外边框的宽度和颜色 -->
+        <attr name="cl_outBorderColor" format="color"/>
+        <attr name="cl_outBorderWidth" format="dimension"/>
+        <!-- 进度条内边框的宽度和颜色 -->
+        <attr name="cl_inBorderColor" format="color"/>
+        <attr name="cl_inBorderWidth" format="dimension"/>
+        <!-- 内部圆的颜色 -->
+        <attr name="cl_inCircleColor" format="color"/>
+        <attr name="cl_progressColor" format="color"/>
+        <!-- 进度条的颜色和宽度 -->
+        <attr name="cl_progressDefaultColor" format="color"/>
+        <attr name="cl_progressWidth" format="dimension"/>
+        <!-- 描述文字的内容,字体大小和字体颜色-->
+        <attr name="cl_descText" format="string"/>
+        <attr name="cl_descTextSize" format="dimension"/>
+        <attr name="cl_descTextColor" format="color"/>
+        <!-- 进度内容,字体大小和字体颜色-->
+        <attr name="cl_progressText" format="string"/>
+        <attr name="cl_progressTextSize" format="dimension"/>
+        <attr name="cl_progressTextColor" format="color"/>
+        <attr name="cl_progressTextStyle">
+            <enum name="cl_normal" value="0"/>
+            <enum name="cl_bold" value="1"/>
+        </attr>
+        <!-- 进度和描述文字之间的间距 -->
+        <attr name="cl_lineGap" format="dimension"/>
+    </declare-styleable>
+    
+    <declare-styleable name="cl_NetworkImageView">
+        <attr name="cl_placeHolder" format="reference"/>
+        <attr name="cl_errorHolder" format="reference"/>
+        <attr name="cl_overlayImageId" format="reference"/>
+        <attr name="cl_shape">
+            <enum name="cl_normal" value="0"/>
+            <enum name="cl_circle" value="1"/>
+            <enum name="cl_round" value="2"/>
+        </attr>
+        <attr name="cl_radius" format="dimension"/>
+        <attr name="cl_topLeftRadius" format="dimension"/>
+        <attr name="cl_topRightRadius" format="dimension"/>
+        <attr name="cl_bottomLeftRadius" format="dimension"/>
+        <attr name="cl_bottomRightRadius" format="dimension"/>
+        <attr name="cl_shapeBorderWidth" format="dimension"/>
+        <attr name="cl_borderColor" format="color"/>
+    </declare-styleable>
+
+
+
+    <declare-styleable name="cl_RoundProgressBar">
+        <attr name="cl_roundColor" format="color"/>
+        <attr name="cl_roundProgressColor" format="color"/>
+        <attr name="cl_round_Width" format="dimension"/>
+        <attr name="cl_roundtextColor" format="color"/>
+        <attr name="cl_roundtextSize" format="dimension"/>
+        <attr name="cl_roundProgress" format="integer"/>
+        <attr name="cl_roundProgressMax" format="integer"/>
+        <attr name="cl_textIsDisplayable" format="boolean"/>
+        <attr name="cl_style">
+            <enum name="cl_STROKE" value="0"/>
+            <enum name="cl_FILL" value="1"/>
+        </attr>
+
+    </declare-styleable>
+
+
+
+    <declare-styleable name="cl_ZoomImageAttr">
+        <attr name="cl_placeHolderId" format="reference"/>
+        <attr name="cl_errorHolderId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="cl_LevelLayout">
+        <!-- the count of step that equals levels sub one-->
+        <attr name="cl_stepCount" format="integer"/>
+        <!-- the default position of chosen level -->
+        <attr name="cl_defaultPos" format="integer"/>
+        <!-- the icon of level -->
+        <attr name="cl_thumb" format="reference"/>
+        <!-- the width of level's icon -->
+        <attr name="cl_thumbWidth" format="dimension"/>
+        <!-- the height of level's icon -->
+        <attr name="cl_thumbHeight" format="dimension"/>
+        <!-- the height of line between level and level -->
+        <attr name="cl_lineHeight" format="dimension"/>
+        <!-- the color of line between level and level -->
+        <attr name="cl_lineColor" format="color"/>
+        <!-- the radius of point where is located level -->
+        <attr name="cl_pointRadius" format="dimension"/>
+        <!-- the color of point where is located level -->
+        <attr name="cl_pointColor" format="color"/>
+        <!-- the speed of thumb scrolling -->
+        <attr name="cl_scrollDuration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="cl_MixedTextImageLayout">
+        <attr name="cl_line_space" format="float" />
+        <attr name="cl_segment_space" format="dimension" />
+    </declare-styleable>
+
+</resources>
