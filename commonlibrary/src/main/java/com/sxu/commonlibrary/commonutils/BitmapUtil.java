@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * Created by Freeman on 17/4/21.
  */
@@ -80,5 +82,25 @@ public class BitmapUtil {
 	public static Drawable zoomDrawable(Drawable drawable, int newWidth, int newHeight) {
 		Bitmap bitmap = drawableToBitmap(drawable);
 		return bitmapToDrawable(zoomBitmap(bitmap, newWidth, newHeight));
+	}
+
+	public static byte[] bitmapToByteArray(final Bitmap bitmap, final boolean needRecycle) {
+		byte[] result = null;
+		if (bitmap != null && !bitmap.isRecycled()) {
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+			if (needRecycle) {
+				bitmap.recycle();
+			}
+
+			result = output.toByteArray();
+			try {
+				output.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 }

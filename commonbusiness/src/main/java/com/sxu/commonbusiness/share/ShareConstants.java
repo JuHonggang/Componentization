@@ -12,13 +12,23 @@ package com.sxu.commonbusiness.share;
 
 
 public class ShareConstants {
+
+	/**
+	 * 分享渠道
+	 */
+	public final static int SHARE_BY_WECAHT = 1;
+	public final static int SHARE_BY_WECHAT_MOMENT = 2;
+	public final static int SHARE_BY_WEIBO = 3;
+	public final static int SHARE_BY_QQ = 4;
+	public final static int SHARE_BY_QQ_ZONE = 5;
+
 	/** 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY */
 	public static String APP_WEIBO_KEY      = "2294078773";
 
 	/**
 	 * 腾讯QQ_APP_KEY
 	 */
-	public static String APP_QQ_KEY         = "1101854724";
+	public static String APP_QQ_KEY         = "1101854724"; // 1101854724
 	//String APP_QQ_KEY         = "GLeABBBWMSQWZ2cR";
 
 	/**

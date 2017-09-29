@@ -9,27 +9,52 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    resourcePrefix "cb_"
+    //resourcePrefix "cb_"
+
+    signingConfigs {
+        myConfig {
+            keyAlias '指南猫旅'
+            keyPassword 'znm@2014#@!'
+            storePassword 'znm@2014#@!'
+            storeFile file('/Users/Freeman/Documents/zhinanmao/zhinanmao')
+        }
+    }
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         if (IS_DEBUG.toBoolean()) {
-            applicationId "com.sxu.commonbusiness"
+            applicationId "com.zhinanmao.app"
             versionCode 1
             versionName "1.0"
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        manifestPlaceholders = [
+                'qq_id': '1101854724'
+        ]
     }
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.myConfig
+        }
+
         release {
             minifyEnabled false
+            signingConfig signingConfigs.myConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['jnis']
+//        }
+//    }
 }
 
 dependencies {
@@ -42,8 +67,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
-    compile files('libs/weibosdkcore_release.jar')
+    //compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
+    //compile files('libs/weibosdkcore_release.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/open_sdk_r5756_lite.jar')
+    compile 'com.sina.weibo.sdk:core:4.1.3:openDefaultRelease@aar'
 }

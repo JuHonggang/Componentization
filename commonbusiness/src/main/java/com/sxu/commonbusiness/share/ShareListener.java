@@ -1,9 +1,7 @@
 package com.sxu.commonbusiness.share;
 
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
-import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
-import com.sina.weibo.sdk.constant.WBConstants;
+import com.sina.weibo.sdk.share.WbShareCallback;
+import com.sxu.commonlibrary.commonutils.LogUtil;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
@@ -21,51 +19,49 @@ import com.tencent.tauth.UiError;
  */
 
 
-public abstract class ShareListener implements IWXAPIEventHandler, IWeiboHandler.Response,  IUiListener{
+public abstract class ShareListener implements WbShareCallback,  IUiListener{
 
 	/**
 	 * 微信分享回调
 	 */
-	@Override
-	public void onReq(BaseReq baseReq) {
-
-	}
-
-
-	@Override
-	public void onResp(BaseResp baseResp) {
-		switch (baseResp.errCode) {
-			case BaseResp.ErrCode.ERR_OK:
-				shareSuccess();
-				break;
-			case BaseResp.ErrCode.ERR_USER_CANCEL:
-				shareCancel();
-				break;
-			default:
-				shareFailure(new Exception(baseResp.errStr));
-				break;
-		}
-	}
+//	@Override
+//	public void onReq(BaseReq baseReq) {
+//		LogUtil.i("onReq");
+//	}
+//
+//
+//	@Override
+//	public void onResp(BaseResp baseResp) {
+//		LogUtil.i("onResp");
+//		switch (baseResp.errCode) {
+//			case BaseResp.ErrCode.ERR_OK:
+//				shareSuccess();
+//				break;
+//			case BaseResp.ErrCode.ERR_USER_CANCEL:
+//				shareCancel();
+//				break;
+//			default:
+//				shareFailure(new Exception(baseResp.errStr));
+//				break;
+//		}
+//	}
 
 	/**
 	 * 微博分享回调
-	 * @param baseResponse
 	 */
 	@Override
-	public void onResponse(BaseResponse baseResponse) {
-		switch (baseResponse.errCode) {
-			case WBConstants.ErrorCode.ERR_OK:
-				shareSuccess();
-				break;
-			case WBConstants.ErrorCode.ERR_FAIL:
-				shareFailure(new Exception(baseResponse.errMsg));
-				break;
-			case WBConstants.ErrorCode.ERR_CANCEL:
-				shareCancel();
-				break;
-			default:
-				break;
-		}
+	public void onWbShareCancel() {
+		shareCancel();
+	}
+
+	@Override
+	public void onWbShareFail() {
+		shareFailure(new Exception("shared filed"));
+	}
+
+	@Override
+	public void onWbShareSuccess() {
+		shareSuccess();
 	}
 
 	/**

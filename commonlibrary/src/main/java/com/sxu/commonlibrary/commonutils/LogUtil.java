@@ -9,7 +9,7 @@ public class LogUtil {
 	/**
 	 *  tag
 	 */
-	public static String tag = "TAG";
+	public static String tag = "SHARE";
 
 	/**
 	 * 是否需要开启Log(needLog：DEBUG模式开启， 非DEBUG模式关闭)
