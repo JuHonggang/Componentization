@@ -1,1 +1,1 @@
-include ':app', ':basecomponent', ':commonbusiness', ':commonlibrary', ':testmodule'
+include ':app', ':basecomponent', ':commonbusiness', ':commonlibrary', ':testmodule', ':smartpicture'

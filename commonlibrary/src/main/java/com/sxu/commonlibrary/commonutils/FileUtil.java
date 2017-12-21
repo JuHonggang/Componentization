@@ -1,5 +1,6 @@
 package com.sxu.commonlibrary.commonutils;
 
+import android.content.Context;
 import android.os.Environment;
 
 import java.io.File;
@@ -32,6 +33,20 @@ public class FileUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean mkdirs(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			return file.mkdirs();
+		}
+
+		return false;
+	}
+
+	public static String getPrivatePath(Context context) {
+		// getCacheDir()的路径：data/data/包名/cache
+		return context.getCacheDir().getAbsolutePath();
 	}
 
 	public static void saveFile(String filePath, String fileName, String content) {

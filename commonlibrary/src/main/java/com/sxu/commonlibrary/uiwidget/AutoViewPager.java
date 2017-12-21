@@ -94,6 +94,7 @@ public class AutoViewPager extends RelativeLayout implements ViewPager.OnPageCha
     private void init() {
         viewPager = new ViewPager(context);
         viewPager.setId(generateId());
+        viewPager.setClipChildren(false);
         viewPager.addOnPageChangeListener(this);
         if (mUserAnimation) {
             viewPager.setPageTransformer(true, this);
@@ -105,6 +106,7 @@ public class AutoViewPager extends RelativeLayout implements ViewPager.OnPageCha
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             containerLayout.setLayoutParams(params);
             containerLayout.addView(viewPager);
+            containerLayout.setClipChildren(false);
             addView(containerLayout);
 
             containerLayout.setOnTouchListener(new OnTouchListener() {
@@ -119,6 +121,7 @@ public class AutoViewPager extends RelativeLayout implements ViewPager.OnPageCha
             params.addRule(CENTER_IN_PARENT);
             viewPager.setLayoutParams(params);
             addView(viewPager);
+            setClipChildren(false);
         }
     }
 

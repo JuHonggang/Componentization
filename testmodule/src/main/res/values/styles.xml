@@ -1,11 +1,43 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <item name="android:windowBackground">@color/cl_transparent</item>
     </style>
 
+    <style name="TextStyle">
+        <item name="android:background">@color/cl_b2</item>
+    </style>
+
+    <style name="TextStyle.RedText">
+        <item name="android:textColor">@color/cl_t1</item>
+    </style>
+
+    <style name="ActivityTheme" parent="AppTheme">
+        <!-- 是否显示ActionBar 没效果-->
+        <item name="android:windowActionBar">true</item>
+        <!-- 没效果 -->
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- 是否显示Activity的Title 默认为false -->
+        <item name="windowNoTitle">false</item>
+        <!-- 没效果-->
+        <item name="android:windowTitleStyle">@style/TextStyle.RedText</item>
+        <!-- 没效果-->
+        <item name="android:windowTitleSize">50sp</item>
+        <!-- API 21以上可用 -->
+        <!-- 页面的背景色 -->
+        <!--<item name="android:background">@color/cl_transparent</item>-->
+        <!--<item name="android:windowBackground">@color/cl_transparent</item>-->
+        <!--<item name="android:colorBackground">@color/cl_transparent</item>-->
+        <item name="android:textColor">@color/cl_t1</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:opacity">opaque</item>-->
+        <!-- 设置Dialog的最小宽度 Dialog的高度根据layout的布局高度设置 -->
+        <!--<item name="android:windowMinWidthMinor">50%</item>-->
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="CommonTheme" parent="Theme.AppCompat.Light">
+
+    </style>
 </resources>

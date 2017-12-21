@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/basecomponent/basecomponent.iml" filepath="$PROJECT_DIR$/basecomponent/basecomponent.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonbusiness/commonbusiness.iml" filepath="$PROJECT_DIR$/commonbusiness/commonbusiness.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlibrary/commonlibrary.iml" filepath="$PROJECT_DIR$/commonlibrary/commonlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartpicture/smartpicture.iml" filepath="$PROJECT_DIR$/smartpicture/smartpicture.iml" />
       <module fileurl="file://$PROJECT_DIR$/testmodule/testmodule.iml" filepath="$PROJECT_DIR$/testmodule/testmodule.iml" />
     </modules>
   </component>
