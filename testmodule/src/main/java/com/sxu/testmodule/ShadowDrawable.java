@@ -82,13 +82,13 @@ public class ShadowDrawable extends ShapeDrawable {
 
 	@Override
 	public void draw(@NonNull Canvas canvas) {
-		Paint paint3 = new Paint();
-		paint3.setColor(Color.RED);
-		paint3.setShadowLayer(50, 5, 2, Color.GREEN);
-		canvas.drawCircle(300, 72,72, paint3);
-
-//		mPaint.setShadowLayer(10, 10, 10, mColor);
-//		canvas.drawRoundRect(new RectF(0, 0, 600, 144), mRadius, mRadius, mPaint);
+//		Paint paint3 = new Paint();
+//		paint3.setColor(Color.RED);
+//		paint3.setShadowLayer(50, 5, 2, Color.GREEN);
+//		canvas.drawCircle(300, 72,72, paint3);
+		mPaint.setShadowLayer(100, 100, 100, mColor);
+		canvas.drawRoundRect(new RectF(0, 0, 600, 144), mRadius, mRadius, mPaint);
+		super.draw(canvas);
 //		//canvas.translate(-10, -10);
 //		RectF newRect = new RectF(0, 0, 600, 144);
 //		Paint otherPaint = new Paint();

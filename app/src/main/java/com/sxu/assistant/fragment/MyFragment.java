@@ -12,7 +12,6 @@ import com.sxu.basecomponentlibrary.fragment.BaseFragment;
  * @date 17/6/27
  */
 
-
 public class MyFragment extends BaseFragment {
 
 	@Override
