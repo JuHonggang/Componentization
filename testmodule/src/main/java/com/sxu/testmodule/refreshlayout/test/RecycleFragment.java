@@ -44,7 +44,7 @@ public class RecycleFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ViewPager viewPager = mContentView.findViewById(R.id.viewPager);
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 50; i++) {
 			data.add("item" + (i+1));
 		}
 
@@ -149,16 +149,16 @@ public class RecycleFragment extends Fragment {
 				});
 			}
 			ViewGroup.LayoutParams params = container.getLayoutParams();
-			params.width = getActivity().getResources().getDisplayMetrics().widthPixels;
-			params.height = getActivity().getResources().getDisplayMetrics().heightPixels;
-			container.addView(itemView, params);
+			//params.width = getActivity().getResources().getDisplayMetrics().widthPixels;
+			//params.height = getActivity().getResources().getDisplayMetrics().heightPixels;
+			container.addView(itemView);
 
 			return itemView;
 		}
 
 		@Override
 		public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
+			container.removeView((View) object);
 		}
 	}
 

@@ -3,23 +3,17 @@ package com.sxu.testmodule.refreshlayout;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.OverScroller;
 import android.widget.Scroller;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sxu.commonlibrary.commonutils.LogUtil;
 import com.sxu.testmodule.R;
@@ -34,46 +28,69 @@ public class RefreshLayout extends LinearLayout {
 
 	private int mHeaderViewResId;
 	private int mFooterViewResId;
-	protected View mHeaderView;
-	protected View mFooterView;
 	private int mHeaderViewHeight;
 	private int mFooterViewHeight;
-	private Scroller mScroller;
-	private VelocityTracker mVelocityTracker;
 	private int mMinVelocity;
-	private float mScrollY;
+	private int mRefreshStatus;
+	private int mScreenHeight;
 	private int mDefaultScrollDistance;
+	private float mScrollY;
 	private float mStartX;
 	private float mStartY;
-	private int mRefreshStatus;
+	private boolean mSupportedTouchBottomLoad;
+	protected View mHeaderView;
+	protected View mFooterView;
+	private Scroller mScroller;
+	private VelocityTracker mVelocityTracker;
 	private OnRefreshListener mListener;
 
 	private final int REFRESH_STATUS_NONE = 0;
 	private final int REFRESH_STATUS_REFRESH = 1;
 	private final int REFRESH_STATUS_LOAD_MORE = 2;
 
-	private int mScreenHeight;
-	// 是否支持触底加载
-	private boolean mSupportedTouchBottomLoad;
+	private final int SPRING_BACK_DURATION = 1000;
+	private final int DEFAULT_SCROLL_DURATION = 600;
+	private final int DELAY_RESUME_DURATION = 500;
+
 	private Mode mMode = Mode.MODE_BOTH;
 
 	public enum Mode {
 		/**
 		 * 下拉刷新和上拉加载都不可用
 		 */
-		MODE_DISABLE,
+		MODE_DISABLE(0),
 		/**
 		 * 只可下拉刷新
 		 */
-		MODE_REFRESH,
+		MODE_REFRESH(1),
 		/**
 		 * 只可上拉加载
 		 */
-		MODE_LOAD_MORE,
+		MODE_LOAD_MORE(2),
 		/**
 		 * 同时支持下拉刷新和上拉加载
 		 */
-		MODE_BOTH,
+		MODE_BOTH(3);
+
+		static Mode getMode(int modeValue) {
+			for (Mode value : Mode.values()) {
+				if (modeValue == value.getValue()) {
+					return value;
+				}
+			}
+
+			return MODE_REFRESH;
+		}
+
+		private int mValue;
+
+		Mode(int value) {
+			this.mValue = value;
+		}
+
+		public int getValue() {
+			return mValue;
+		}
 	}
 
 	public RefreshLayout(Context context) {
@@ -89,6 +106,8 @@ public class RefreshLayout extends LinearLayout {
 		TypedArray arrays = context.obtainStyledAttributes(attrs, R.styleable.RefreshLayout);
 		mHeaderViewResId = arrays.getResourceId(R.styleable.RefreshLayout_headerViewResId, R.layout.item_header_layout);
 		mFooterViewResId = arrays.getResourceId(R.styleable.RefreshLayout_footerViewResId, R.layout.item_footer_layout);
+		mMode = Mode.getMode(arrays.getInt(R.styleable.RefreshLayout_mode, 1));
+		mSupportedTouchBottomLoad = arrays.getBoolean(R.styleable.RefreshLayout_supportTouchBottomLoad, true);
 		arrays.recycle();
 		initView(context);
 	}
@@ -97,7 +116,6 @@ public class RefreshLayout extends LinearLayout {
 		setOrientation(VERTICAL);
 		mRefreshStatus = REFRESH_STATUS_NONE;
 		mScroller = new Scroller(context);
-		mSupportedTouchBottomLoad = true;
 		mScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 		mVelocityTracker = VelocityTracker.obtain();
 		ViewConfiguration configuration = ViewConfiguration.get(context);
@@ -111,7 +129,7 @@ public class RefreshLayout extends LinearLayout {
 			throw new IllegalStateException("including up to one child view");
 		}
 
-		setTouchBottomLoad();
+		setTouchBottomLoadEnabled();
 		addHeaderViewAndFooterView();
 	}
 
@@ -138,7 +156,15 @@ public class RefreshLayout extends LinearLayout {
 		}
 	}
 
-	private void setTouchBottomLoad() {
+	public void setMode(Mode mode) {
+		this.mMode = mode;
+	}
+
+	public void setSupportedTouchBottomLoad(boolean supported) {
+		this.mSupportedTouchBottomLoad = supported;
+	}
+
+	public void setTouchBottomLoadEnabled() {
 		if (getChildCount() == 1 && mSupportedTouchBottomLoad && (mMode == Mode.MODE_LOAD_MORE || mMode == Mode.MODE_BOTH)) {
 			if (getChildAt(0) instanceof AbsListView) {
 				((AbsListView) getChildAt(0)).setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -159,7 +185,6 @@ public class RefreshLayout extends LinearLayout {
 					getChildAt(0).setOnScrollChangeListener(new OnScrollChangeListener() {
 						@Override
 						public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-							LogUtil.i("isBottom==" + ScrollStateUtils.reachBottom(v));
 							if (ScrollStateUtils.reachBottom(v)) {
 								setLoadMoreEnabled();
 							}
@@ -175,7 +200,6 @@ public class RefreshLayout extends LinearLayout {
 						@Override
 						public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 							super.onScrolled(recyclerView, dx, dy);
-							LogUtil.i("isBottom==" + ScrollStateUtils.reachBottom(recyclerView));
 							if (ScrollStateUtils.reachBottom(recyclerView)) {
 								setLoadMoreEnabled();
 							}
@@ -186,13 +210,14 @@ public class RefreshLayout extends LinearLayout {
 		}
 	}
 
-	private void setLoadMoreEnabled() {
+	public void setLoadMoreEnabled() {
 		if (mListener != null) {
 			mListener.onLoad(mFooterView);
 		}
 		showLoadingLayout();
 		mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
-		mScroller.startScroll(0, getScrollY(), 0, mFooterViewHeight, 600);
+		LogUtil.i("getScrollY===" + getScrollY() + " footerView==" + mFooterViewHeight);
+		mScroller.startScroll(0, getScrollY(), 0, mFooterViewHeight, DEFAULT_SCROLL_DURATION);
 		invalidate();
 	}
 
@@ -251,7 +276,6 @@ public class RefreshLayout extends LinearLayout {
 				int yVelocity = (int) mVelocityTracker.getYVelocity();
 				if (currentTouchY > mStartY) { // 下拉刷新
 					if (yVelocity > mMinVelocity) {
-						LogUtil.i("y========= speed");
 						if (getScrollY() < 0) {
 							if (mListener != null) {
 								mListener.onRefresh(mHeaderView);
@@ -265,16 +289,15 @@ public class RefreshLayout extends LinearLayout {
 									0, 0, mHeaderViewHeight);
 						}
 					} else {
-						LogUtil.i("y========= autoScroll");
 						if (getScrollY() < 0) {
 							if (mListener != null) {
 								mListener.onRefresh(mHeaderView);
 							}
 							showRefreshingLayout();
 							mRefreshStatus = REFRESH_STATUS_REFRESH;
-							mScroller.startScroll(0, getScrollY(), 0, Math.abs(getScrollY()), 1000);
+							mScroller.startScroll(0, getScrollY(), 0, Math.abs(getScrollY()), SPRING_BACK_DURATION);
 						} else {
-							mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight - getScrollY(), 1000);
+							mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight - getScrollY(), SPRING_BACK_DURATION);
 						}
 					}
 				} else { // 上拉加载
@@ -293,14 +316,16 @@ public class RefreshLayout extends LinearLayout {
 						}
 					} else {
 						if (getScrollY() - mDefaultScrollDistance < mFooterViewHeight) {
-							mScroller.startScroll(0, getScrollY(), 0, mDefaultScrollDistance - getScrollY(), 1000);
+							mScroller.startScroll(0, getScrollY(), 0,
+									mDefaultScrollDistance - getScrollY(), SPRING_BACK_DURATION);
 						} else {
 							if (mListener != null) {
 								mListener.onLoad(mFooterView);
 							}
 							showLoadingLayout();
 							mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
-							mScroller.startScroll(0, getScrollY(), 0, mFooterViewHeight - getScrollY() + mDefaultScrollDistance, 1000);
+							mScroller.startScroll(0, getScrollY(), 0,
+									mFooterViewHeight - getScrollY() + mDefaultScrollDistance, SPRING_BACK_DURATION);
 						}
 					}
 				}
@@ -371,20 +396,20 @@ public class RefreshLayout extends LinearLayout {
 	public void refreshComplete() {
 		if (mRefreshStatus == REFRESH_STATUS_REFRESH) {
 			refreshingComplete();
-			mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight, 600);
+			mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight, DEFAULT_SCROLL_DURATION);
 			invalidate();
 			mHeaderView.postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					resetRefreshLayout();
 				}
-			}, 600);
+			}, DELAY_RESUME_DURATION);
 		}
 
 		if (mRefreshStatus == REFRESH_STATUS_LOAD_MORE) {
 			loadingComplete();
 			if (getScrollY() > mFooterViewHeight) {
-				mScroller.startScroll(0, getScrollY(), 0, -mFooterViewHeight, 600);
+				mScroller.startScroll(0, getScrollY(), 0, -mFooterViewHeight, DEFAULT_SCROLL_DURATION);
 			}
 			invalidate();
 			mFooterView.postDelayed(new Runnable() {
@@ -392,7 +417,7 @@ public class RefreshLayout extends LinearLayout {
 				public void run() {
 					resetLoadMoreLayout();
 				}
-			}, 600);
+			}, DELAY_RESUME_DURATION);
 		}
 
 		mRefreshStatus = REFRESH_STATUS_NONE;
@@ -418,9 +443,6 @@ public class RefreshLayout extends LinearLayout {
 		setMeasuredDimension(width, height);
 	}
 
-	/**
-	 * 不要在onLayout中修改View的Params,否则将会陷入onMeasure, onLayout的死循环中
-	 */
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		super.onLayout(changed, l, t, r, b);
